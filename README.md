@@ -82,6 +82,18 @@ Authenticate a user and generate a JWT token.
 ### Purpose
 Validate the JWT token to ensure the user is authenticated.
 
+### Headers
+```txt
+Authorization: Bearer <JWT_TOKEN>
+```
+### Response
+#### Success (valid token):
+```json
+{
+  "message": "Token is valid",
+}
+```
+
 
 
 
