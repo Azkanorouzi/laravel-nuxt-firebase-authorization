@@ -20,6 +20,48 @@ for example:
 FIREBASE_CREDENTIALS=/home/azka/workstation/projects/laravel/laravel-firebase-app/storage/app/firebase-service-account.json
 
 ---
+# API Routes Documentation
+
+This document explains the API routes used in the **Firebase + Laravel + Nuxt Authentication Project**. Each route is described with its purpose, request format, response format, and example usage.
+
+---
+
+## 1. **POST `/api/sign-up`**
+
+### Purpose
+Register a new user.
+
+### Request Body
+```json
+{
+  "email": "newuser2@example.com",
+  "password": "password123"
+}
+```
+### Response
+```json
+{
+  "message": "User registered successfully",
+  "user": {
+    "id": 1,
+    "email": "newuser2@example.com"
+  }
+}
+```
+Error (e.g., email already exists):
+```json
+{
+  "error": "Email already registered"
+}
+```
+Example Usage
+```json
+const response = await $axios.post('/api/sign-up', {
+  email: 'newuser2@example.com',
+  password: 'password123',
+});
+console.log(response.data);
+```
 
 ## 🚀 Features
 
