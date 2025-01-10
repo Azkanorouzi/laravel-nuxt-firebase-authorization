@@ -11,3 +11,7 @@ Route::post('/sign-up', [FirebaseController::class, 'signUp']);
 Route::post('/sign-in', [FirebaseController::class, 'signIn']);
 
 Route::get('/', [FirebaseController::class, 'index'])->middleware(VerifyFirebaseToken::class);
+
+Route::fallback(function () {
+    return response()->json(['message' => 'Page Not Found'], 404);
+});

@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\services\AuthService;
 use Illuminate\Http\Request;
 use App\Services\FirebaseService;
 
 class FirebaseController extends Controller
 {
-    protected $firebase;
+    protected $authService;
 
-    public function __construct(FirebaseService $firebase)
+    public function __construct(AuthService $authService)
     {
-        $this->firebase = $firebase;
+        $this->authService = $authService;
     }
 
     /**
@@ -19,6 +20,10 @@ class FirebaseController extends Controller
      */
     public function index(Request $request)
     {
+
+        $request->validate([
+            'email' => 'required|email|unique:users,email', // Ensure email is unique
+        ]);
         // Get the email from the request (attached by the middleware)
         $email = $request->input('email');
 
@@ -32,29 +37,13 @@ class FirebaseController extends Controller
      */
     public function signUp(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email|unique:users,email', // Ensure email is unique
-            'password' => 'required|min:8', // Enforce strong passwords
-        ]);
+        $response = $this->authService->signUp($request);
 
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        try {
-            $user = $this->firebase->auth()->createUserWithEmailAndPassword($email, $password);
-            return response()->json([
-                'message' => 'User signed up successfully',
-                'user' => [
-                    'uid' => $user->uid,
-                    'email' => $user->email,
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to sign up',
-                'message' => $e->getMessage(),
-            ], 400);
+        if (isset($response['error'])) {
+            return response()->json($response, 400);
         }
+
+        return response()->json($response);
     }
 
     /**
@@ -62,37 +51,12 @@ class FirebaseController extends Controller
      */
     public function signIn(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        $response = $this->authService->signIn($request);
 
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        try {
-            // Sign in the user
-            $signInResult = $this->firebase->auth()->signInWithEmailAndPassword($email, $password);
-
-            // Get the user data
-            $user = $signInResult->data();
-
-            // Get the ID token
-            $idToken = $signInResult->idToken();
-
-            return response()->json([
-                'message' => 'User signed in successfully',
-                'user' => [
-                    'uid' => $user['localId'], // Firebase user UID
-                    'email' => $user['email'], // User email
-                    'token' => $idToken, // ID token for authenticated requests
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to sign in',
-                'message' => $e->getMessage(),
-            ], 400);
+        if (isset($response['error'])) {
+            return response()->json($response, 400);
         }
+
+        return response()->json($response);
     }
 }

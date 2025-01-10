@@ -2,12 +2,11 @@
 
 namespace App\Providers;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use Illuminate\Support\ServiceProvider;
-use Kreait\Firebase\Factory;
 use Kreait\Firebase\Auth;
-use App\Services\FirebaseService;
+use Kreait\Firebase\Factory;
+use App\Repositories\FirebaseAuthRepository;
+use App\Services\AuthService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,11 +15,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Bind Guzzle HTTP Client
-        $this->app->bind(ClientInterface::class, function () {
-            return new Client();
-        });
-
         // Bind Firebase Factory
         $this->app->bind(Factory::class, function () {
             return (new Factory())->withServiceAccount(config('firebase.credentials.file'));
@@ -31,9 +25,14 @@ class AppServiceProvider extends ServiceProvider
             return $app->make(Factory::class)->createAuth();
         });
 
-        // Bind FirebaseService with the Factory dependency
-        $this->app->singleton(FirebaseService::class, function ($app) {
-            return new FirebaseService($app->make(Factory::class));
+        // Bind FirebaseAuthRepository
+        $this->app->bind(FirebaseAuthRepository::class, function ($app) {
+            return new FirebaseAuthRepository($app->make(Auth::class));
+        });
+
+        // Bind AuthService
+        $this->app->bind(AuthService::class, function ($app) {
+            return new AuthService($app->make(FirebaseAuthRepository::class));
         });
     }
 
