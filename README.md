@@ -54,14 +54,36 @@ Error (e.g., email already exists):
   "error": "Email already registered"
 }
 ```
-Example Usage
+## 2. POST /api/sign-in
+### Purpose
+Authenticate a user and generate a JWT token.
+### Request Body
 ```json
-const response = await $axios.post('/api/sign-up', {
-  email: 'newuser2@example.com',
-  password: 'password123',
-});
-console.log(response.data);
+{
+  "email": "newuser2@example.com",
+  "password": "password123"
+}
 ```
+### Response
+#### Success
+```json
+{
+  "message": "User authenticated successfully",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+### Error (e.g., invalid credentials):
+```json
+{
+  "error": "Invalid email or password"
+}
+```
+## 3. GET /api/validate-token
+### Purpose
+Validate the JWT token to ensure the user is authenticated.
+
+
+
 
 ## 🚀 Features
 
