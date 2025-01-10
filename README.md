@@ -56,21 +56,21 @@ FIREBASE_CREDENTIALS=/home/azka/workstation/projects/laravel/laravel-firebase-ap
 ## 📂 Project Structure
 
 .
-├── client/ # Nuxt.js frontend
-│ ├── assets/ # Static assets (images, fonts, etc.)
-│ ├── components/ # Reusable Vue components
-│ ├── layouts/ # Layouts for pages
-│ ├── middleware/ # Nuxt middleware for route protection
-│ ├── pages/ # Application pages
-│ ├── plugins/ # Nuxt plugins (e.g., Pinia, Axios)
-│ ├── store/ # Pinia store for state management
-│ └── nuxt.config.ts # Nuxt configuration file
+├── client/                  # Nuxt.js frontend
+│   ├── assets/              # Static assets (images, fonts, etc.)
+│   ├── components/          # Reusable Vue components
+│   ├── layouts/             # Layouts for pages
+│   ├── middleware/          # Nuxt middleware for route protection
+│   ├── pages/               # Application pages
+│   ├── plugins/             # Nuxt plugins (e.g., Pinia, Axios)
+│   ├── store/               # Pinia store for state management
+│   └── nuxt.config.ts       # Nuxt configuration file
 │
-├── server/ # Laravel backend
-│ ├── app/ # Application logic
-│ ├── config/ # Configuration files
-│ ├── database/ # Database migrations and seeders
-│ ├── routes/ # API routes
-│ └── .env # Environment variables
+├── server/                  # Laravel backend
+│   ├── app/                 # Application logic
+│   ├── config/              # Configuration files
+│   ├── database/            # Database migrations and seeders
+│   ├── routes/              # API routes
+│   └── .env                 # Environment variables
 │
-└── README.md # This file
+└── README.md                # This file
