@@ -8,6 +8,17 @@ Welcome to my **Firebase + Laravel + Nuxt Authentication Project**! This project
 
 3- Head over to /client and run npm install && npm run dev
 
+# ! > [!CAUTION]
+
+> You have to create a firebase-service-account.json and put your own credentials there.
+
+# ! > [!CAUTION]
+
+> You must create an environment variable that holds the address to firebase-service-account which is normally in /storage/app, it's better for the path to be an absolute path.
+
+for example:
+FIREBASE_CREDENTIALS=/home/azka/workstation/projects/laravel/laravel-firebase-app/storage/app/firebase-service-account.json
+
 ---
 
 ## 🚀 Features
